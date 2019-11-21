@@ -13,13 +13,13 @@ switch noise
         disp(noise + " noise chosen" );
         prompt = 'Enter a mean for the noise\n';
         mean = input(prompt);
-        while(~isnumeric(mean) || ~isscalar(mean) || isnan(mean) || isreal(mean))
+        while(~isnumeric(mean) || ~isscalar(mean) || isnan(mean) || ~isreal(mean))
             disp("Not a valid input");
             mean = input(prompt);
         end
         prompt = 'Enter a variance for the noise\n';
         variance = input(prompt);
-        while(~isnumeric(variance) || ~isscalar(variance)  || isnan(variance) || isreal(variance))
+        while(~isnumeric(variance) || ~isscalar(variance)  || isnan(variance) || ~isreal(variance))
             disp("Not a valid input");
             variance = input(prompt);
         end
@@ -28,7 +28,7 @@ switch noise
         disp(noise + " noise chosen" );
         prompt = 'Enter the noise density\n';
         density = input(prompt);
-        while(~isnumeric(density) || ~isscalar(density)  || isnan(density) || isreal(density))
+        while(~isnumeric(density) || ~isscalar(density)  || isnan(density) || ~isreal(density))
             disp("Not a valid input");
             density = input(prompt);
         end
