@@ -4,10 +4,13 @@ function []=smoothfilters(path)
 
 
 Imagem = imread(path);
-ImagemGS = rgb2gray(Imagem);
+[~, ~, numberOfColorChannels] = size(Imagem);
+if(numberOfColorChannels==3)
+    Imagem = rgb2gray(Imagem);
+end
 
 
-main_smoothfilters(ImagemGS,path);
+main_smoothfilters(Imagem,path);
 
 
 

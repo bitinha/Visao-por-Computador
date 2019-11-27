@@ -145,15 +145,16 @@ img = centrar(img);
 noisyImage = centrar(noisyImage);
 smoothedImage = centrar(smoothedImage);
 
-FI=fft2(img);
+FI=fft2((img));
 figure(1);
-imshow((FI));
-FN=fft2(noisyImage);
+imshow(uint8(255*mat2gray(log(abs(FI)))));
+FN=fft2((noisyImage));
 figure(2);
-imshow((FN));
-FS=fft2(smoothedImage);
+imshow(uint8(255*mat2gray(log(abs((FN))))));
+FS=fft2((smoothedImage));
 figure(3);
-imshow((FS));
+imshow(uint8(255*mat2gray(log(abs((FS))))));
+%dft))));
 %{
 dft=fft2(img);
 dft_of_dft=fft2(dft);
