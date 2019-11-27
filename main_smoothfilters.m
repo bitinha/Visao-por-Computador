@@ -1,6 +1,4 @@
 function [] = main_smoothfilters(img,path)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
 
 
 
@@ -28,7 +26,7 @@ switch noise
             variance = input(prompt);
         end
         noisyImage=addNoise(img,noise,mean,variance);
-        imwrite(noisyImage,path+"_"+noise+"_"+mean+"_"+variance+".png");
+        imwrite(noisyImage,strcat(path,'_',noise,'_',num2str(mean),'_',num2str(variance),'.png'));
     case '2'
         noise = 'salt & pepper';
         disp(noise + " noise chosen" );
@@ -39,7 +37,7 @@ switch noise
             density = input(prompt);
         end
         noisyImage = addNoise(img,noise,density);
-        imwrite(noisyImage,path+"_"+noise+"_"+density+".png");
+        imwrite(noisyImage,strcat(path,'_',noise,'_',num2str(density),'.png'));
 end
    
 
@@ -64,23 +62,23 @@ switch domain
             switch smoothing
                 case '1'
                     prompt = 'Enter the size of the filter to apply\n';
-                    size = input(prompt);
-                    while(~isnumeric(size) || ~isscalar(size)  || isnan(size) || ~isreal(size))
+                    tamanho = input(prompt);
+                    while(~isnumeric(tamanho) || ~isscalar(tamanho)  || isnan(tamanho) || ~isreal(tamanho))
                         disp("Not a valid input");
-                        size = input(prompt);
+                        tamanho = input(prompt);
                     end
                     
-                    filter = fspecial('average',size);
+                    filter = fspecial('average',tamanho);
                     smoothedImage = imfilter(noisyImage,filter);
                     
-                    imwrite(smoothedImage,path+"_smooth_average_"+size+".png");
+                    imwrite(smoothedImage,strcat(path,'_smooth_average_',num2str(tamanho),'.png'));
                     
                 case '2'
                     prompt = 'Enter the size of the filter to apply\n';
-                    size = input(prompt);
-                    while(~isnumeric(size) || ~isscalar(size)  || isnan(size) || ~isreal(size))
+                    tamanho = input(prompt);
+                    while(~isnumeric(tamanho) || ~isscalar(tamanho)  || isnan(tamanho) || ~isreal(tamanho))
                         disp("Not a valid input");
-                        size = input(prompt);
+                        tamanho = input(prompt);
                     end
                     prompt = 'Enter the deviation of the filter to apply\n';
                     deviation = input(prompt);
@@ -89,22 +87,22 @@ switch domain
                         deviation = input(prompt);
                     end
                     
-                    smoothedImage = imgaussfilt(noisyImage,deviation,'FilterSize',size,'FilterDomain','spatial');
+                    smoothedImage = imgaussfilt(noisyImage,deviation,'FilterSize',tamanho,'FilterDomain','spatial');
                     
                     
-                    imwrite(smoothedImage,path+"_smooth_gaussian_"+size+"_"+deviation+".png");
+                    imwrite(smoothedImage,strcat(path,'_smooth_gaussian_',num2str(tamanho),'_',num2str(deviation),'.png'));
                 case '3'
                     
                     prompt = 'Enter the size of the filter to apply\n';
-                    size = input(prompt);
-                    while(~isnumeric(size) || ~isscalar(size)  || isnan(size) || ~isreal(size))
+                    tamanho = input(prompt);
+                    while(~isnumeric(tamanho) || ~isscalar(tamanho)  || isnan(tamanho) || ~isreal(tamanho))
                         disp("Not a valid input");
-                        size = input(prompt);
+                        tamanho = input(prompt);
                     end
                     
-                    smoothedImage = medfilt2(noisyImage,[size size]);%Ainda da para especificar o padding
+                    smoothedImage = medfilt2(noisyImage,[tamanho tamanho]);%Ainda da para especificar o padding
                     
-                    imwrite(smoothedImage,path+"_smooth_median_"+size+".png");
+                    imwrite(smoothedImage,strcat(path,'_smooth_median_',num2str(tamanho),'.png'));
                   
                 otherwise
                     loop=1;
@@ -133,6 +131,48 @@ switch domain
 end
    
 
+tamanho = size(img);
 
+img = im2double(img);
+noisyImage = im2double(noisyImage);
+smoothedImage = im2double(smoothedImage);
+
+img = padarray(img,tamanho,'post');
+noisyImage = padarray(noisyImage,tamanho,'post');
+smoothedImage = padarray(smoothedImage,tamanho,'post');
+
+img = centrar(img);
+noisyImage = centrar(noisyImage);
+smoothedImage = centrar(smoothedImage);
+
+FI=fft2(img);
+figure(1);
+imshow((FI));
+FN=fft2(noisyImage);
+figure(2);
+imshow((FN));
+FS=fft2(smoothedImage);
+figure(3);
+imshow((FS));
+%{
+dft=fft2(img);
+dft_of_dft=fft2(dft);
+
+
+spectrum = abs(dft);
+c = 255 / log(1 + max(spectrum(:)));
+spectrum = c*log(spectrum);
+double_dft_spectrum = abs(dft_of_dft);
+c = 255 / log(1 + max(double_dft_spectrum(:)));
+double_dft_spectrum = c*log(double_dft_spectrum);
+
+
+
+figure(1);
+imshow(spectrum);
+
+figure(2);
+imshow(double_dft_spectrum);
+%}
 end
 
