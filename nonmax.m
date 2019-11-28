@@ -13,39 +13,33 @@ Em = zeros(sx,sy);
                else
                    Em(i,j) = Es(i,j);
                end
-           else
-               if((o>22.5 && o<=67.5) || (o >-157.5 && o <=-112.5) )
-                   
-                   if(Es(i,j) < Es(i+1,j-1) || Es(i,j) < Es(i-1,j+1))
-                       Em(i,j) = 0;
-                   else
-                       Em(i,j) = Es(i,j);
-                   end
+           elseif((o>22.5 && o<=67.5) || (o >-157.5 && o <=-112.5) )
+
+               if(Es(i,j) < Es(i+1,j-1) || Es(i,j) < Es(i-1,j+1))
+                   Em(i,j) = 0;
                else
-                   if((o>67.5 && o<=112.5) || (o >-112.5 && o <=-67.5) )
+                   Em(i,j) = Es(i,j);
+               end
+           elseif((o>67.5 && o<=112.5) || (o >-112.5 && o <=-67.5) )
                        
-                       if(Es(i,j) < Es(i+1,j) || Es(i,j) < Es(i-1,j))
-                           Em(i,j) = 0;
-                       else
-                           Em(i,j) = Es(i,j);
-                       end
-                       
-                   else
-                       if((o>112.5 && o<=157.5) || (o >-67.5 && o <=-22.5) )
-                           
-                           if(Es(i,j) < Es(i-1,j-1) || Es(i,j) < Es(i+1,j+1))
-                               Em(i,j) = 0;
-                           else
-                               Em(i,j) = Es(i,j);
-                           end
-                       end
-                   end
+               if(Es(i,j) < Es(i+1,j) || Es(i,j) < Es(i-1,j))
+                   Em(i,j) = 0;
+               else
+                   Em(i,j) = Es(i,j);
+               end
+
+           elseif((o>112.5 && o<=157.5) || (o >-67.5 && o <=-22.5) )
+
+               if(Es(i,j) < Es(i-1,j-1) || Es(i,j) < Es(i+1,j+1))
+                   Em(i,j) = 0;
+               else
+                   Em(i,j) = Es(i,j);
                end
            end
            
        end
    end
-
+Em = uint8(Em);
    
    
 end

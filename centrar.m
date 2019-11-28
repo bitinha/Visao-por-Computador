@@ -1,6 +1,5 @@
 function [out] = centrar(in)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+
 
 tamanho=size(in);
 out = zeros(tamanho(1),tamanho(2));
