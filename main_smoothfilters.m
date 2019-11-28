@@ -39,10 +39,6 @@ function [noisyImage,smoothedImage] = main_smoothfilters(img,noise,noiseParamete
                     H(i,j) = 1/(1+(dist/cf).^fo);
                 end
             end
-            G= FN .* H;
-            G=ifft2(G);
-            smoothedImage = centrar(G);
-            smoothedImage = smoothedImage(1:xs,1:ys);
         else %Gaussiano
             cf = filterParameters(1);
             H = zeros(xs,ys);
@@ -52,12 +48,11 @@ function [noisyImage,smoothedImage] = main_smoothfilters(img,noise,noiseParamete
                     H(i,j) = exp(-(dist.^2)/(2*cf.^2));
                 end
             end
-            G= FN .* H;
-            G=ifft2(G);
-            smoothedImage = centrar(G);
-            smoothedImage = smoothedImage(1:xs,1:ys);
-            
         end
+        G= FN .* H;
+        G=ifft2(G);
+        smoothedImage = centrar(G);
+        smoothedImage = real(smoothedImage(1:xs,1:ys));
     end
     
 %{
