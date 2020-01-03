@@ -49,6 +49,5 @@ switch noise
         noiseParameters = density;
 end
    
-[centers,snr] = main_image_recognition(gray_path,noise,noiseParameters);
-
+[T,nT] = main_image_recognition(gray_path,noise,noiseParameters);
 

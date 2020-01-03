@@ -1,5 +1,6 @@
 function [res] = calculaSNR(img,noisyImage)
-
+img=im2double(img);
+noisyImage= im2double(noisyImage);
 avg = mean(mean(img));
 
 sumP=0;
